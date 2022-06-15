@@ -28,6 +28,17 @@ module.exports = {
             presets: ['@babel/preset-env'],
           },
         },
+      }, {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              // 配置 name 屬性 (第二步)
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
     ]
   },
