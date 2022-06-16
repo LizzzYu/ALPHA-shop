@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALPHA shop</title>
-  <link href="dist/main.css"/>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="container">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALPHA shop</title>
+    <link href="dist/main.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- header -->
       <div class="header">
         <ul class="header__header-list"></ul>
         <div class="header__logo">
@@ -17,8 +17,20 @@
         </div>
         <div class="header__action-row"></div>
       </div>
+
+      <!-- container -->
+      <div class="container">
+        <h3 class="container__title">結帳</h3>
+        <div class="payment-content">
+          <div class="payment-content__shipping-info">
+            <div id="stepper" class="payment-content__shipping-info__stepper-container"></div>
+          </div>
+          <div class="payment-content__cart">
+            cart
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <script src="bundle.js"></script>
-</body>
+    <script src="bundle.js"></script>
+  </body>
 </html>

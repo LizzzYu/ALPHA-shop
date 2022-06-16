@@ -2,15 +2,9 @@
 @import './foundation/variables';
 @import './foundation/reset';
 @import './foundation/style';
+@import './foundation/mixin';
 
-%headerGrid {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
-  column-gap: 32px;
-}
-
-.container {
+.wrapper {
   max-width: $max-width;
   margin: 0 auto;
 }
@@ -27,11 +21,19 @@
     padding-right: 86px;
 
     > li {
+      @include flex-layout(center, center);
       font-family: 'Noto Sans TC';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
       line-height: 24px;
+
+      height: 60px;
+
+      &:hover {
+        padding-top: 3px;
+        border-bottom: 3px solid $pink;
+      }
     }
   }
 
@@ -43,5 +45,78 @@
 
   &__action-row {
     @extend %headerGrid;
+  }
+}
+
+.container {
+  padding-top: 80px;
+
+  &__title {
+    @extend %mainTitle;
+  }
+}
+
+.payment-content {
+  display: grid;
+  grid-template-columns: 6fr 5fr;
+  column-gap: 130px;
+  padding-top: 48px;
+
+  &__shipping-info {
+    @include flex-layout(space-between, center);
+    flex-direction: column;
+    align-items: stretch;
+
+    &__stepper-container {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+.stepper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  column-gap: 8px;
+  align-items: center;
+
+  &__circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid $light-black-text;
+
+    background-color: $background-color-light;
+    color: $light-black-text;
+
+    @include flex-layout(center, center);
+
+    &__active {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid $light-black-text;
+
+      @include flex-layout(center, center);
+
+      background-color: $light-black-text;
+      color: $background-color-light;
+    }
+  }
+
+  &__text {
+    @extend %primaryText;
+  }
+
+  &__line {
+    width: 60px;
+    height: 1px;
+
+    background-color: $light-black-text;
+    color: $background-color-light;
   }
 }

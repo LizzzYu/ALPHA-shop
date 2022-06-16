@@ -12,6 +12,22 @@ const headerList = [
   '聯絡我們',
 ]
 
+const stepperItems = [
+  {
+    id: 1,
+    name: '寄送地址',
+    finished: true,
+  }, {
+    id: 2,
+    name: '運送方式',
+    finished: false,
+  }, {
+    id: 3,
+    name: '付款資訊',
+    finished: false,
+  }
+]
+
 const headerIcons = [
   'icon-search.png',
   'icon-shopping-cart.png',
@@ -30,10 +46,31 @@ const getHeaderList = () => {
     `<img src="${icon}" />`
   )).join('')
 
-  console.log(iconContent)
-
   list.innerHTML = listContent
   iconList.innerHTML = iconContent
 }
 
-getHeaderList()
+// stepper
+const getStepper = () => {
+  const stepper = document.querySelector('#stepper')
+  let step = 1
+  let stepperContent = ''
+
+  stepperItems.forEach(step => {
+    stepperContent += 
+    `<div class="stepper">
+      <div class="stepper__circle${step.finished ? '__active' : ''}">${step.id}</div>
+      <p class="stepper__text">${step.name}</p>
+    </div>
+    ${step.id !== 3 ? `<div class="stepper__line"></div>` : ''}`
+  })
+  stepper.innerHTML = ''
+  stepper.innerHTML = stepperContent
+}
+
+const getFullWhenLoaded = () => {
+  getHeaderList()
+  getStepper()
+}
+
+getFullWhenLoaded()
