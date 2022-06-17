@@ -3,3 +3,10 @@
   justify-content: $justify;
   align-items: $align;
 }
+
+@mixin grid-form-layout($firstCol, $secondCol) {
+  width: 100%;
+  display: grid;
+  grid-template-columns: $firstCol $secondCol;
+  column-gap: 30px;
+}
