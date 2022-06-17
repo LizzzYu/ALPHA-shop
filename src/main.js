@@ -7,7 +7,9 @@ import {
   headerIcons,
   formShippingAddress,
   titleItems,
-  citiesItems
+  citiesItems,
+  productInfo,
+  footerInfomation
 } from './config/pageConfigs'
 
 let currentStep = 1;
@@ -114,11 +116,84 @@ const getFormContent = () => {
   formPanel.innerHTML = formContentTop + formContent + formContentBottom;
 }
 
+const getProductInfo = () => {
+  const productPanel = document.querySelector('.product-panel')
+  productPanel.innerHTML = ''
+  let productContent = ''
+
+  productInfo.forEach(item => productContent += `
+  <div class="product-panel__product">
+    <img src="${item.image}" />
+    <div class="product-panel__product__info">
+      <div>
+        <p>${item.name}</p>
+        <div class="product-panel__button-group">
+          <button class="product-panel__button-group__minus">
+            -
+          </button>
+          <p>1</p>
+          <button class="product-panel__button-group__plus">
+            +
+          </button>
+        </div>
+      </div>
+      <p>$${item.price}</p>
+    </div>
+  </div>
+  `)
+
+  productPanel.innerHTML = productContent
+}
+
+// const getFooterContent = () => {
+//   const footerInfo = document.querySelector('.footer__container__info')
+//   footerInfo.innerHTML = ''
+//   let footerInfoContentStart = ''
+//   let serviceContent = ''
+
+//   footerInfomation.forEach((item, index) => (
+//     footerInfoContentStart += `
+//     <div>
+//       <h3 class="footer__sub-title">${item.title}</h3>
+//       <div class="footer__container__info__content">
+//       ${item.sevices.forEach(service => {
+//         console.log(service)
+//         `<p>${service}</p>`
+//       })}
+//       </div>
+//     </div>
+//     `
+//   ))
+
+//   console.log(footerInfoContentStart)
+
+//   footerInfo.innerHTML = footerInfoContentStart
+// }
+
+const nextButton = document.querySelector('.action-button-group__next')
+const prevButton = document.querySelector('.action-button-group__previous')
+
+nextButton.addEventListener('click', () => {
+  if (currentStep !== 3) {
+    currentStep = currentStep + 1
+    getFullWhenLoaded()
+  } else return
+})
+
+prevButton.addEventListener('click', () => {
+  if (currentStep !== 1) {
+    currentStep = currentStep - 1
+    getFullWhenLoaded()
+  } else return
+})
+
 const getFullWhenLoaded = () => {
   getHeaderList()
   getSubTitle()
   getStepper()
   getFormContent()
+  getProductInfo()
+  // getFooterContent()
 }
 
 getFullWhenLoaded()

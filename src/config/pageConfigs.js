@@ -1,6 +1,9 @@
 import '../static/images/icon-search.png';
 import '../static/images/icon-shopping-cart.png';
 import '../static/images/icon-theme.png';
+import '../static/images/product-1.png';
+import '../static/images/product-2.png';
+import '../static/images/social-media-icon.png';
 
 export const headerList = [
   '男款',
@@ -71,3 +74,46 @@ export const titleItems = [
 ];
 
 export const citiesItems = ['台北市', '高雄市'];
+
+export const productInfo = [
+  {
+    id: 1,
+    name: '破壞補丁修身牛仔褲',
+    price: 3999,
+    image: 'product-1.png'
+  }, {
+    id: 2,
+    name: '刷色直筒牛仔褲',
+    price: 1299,
+    image: 'product-2.png'
+  }
+];
+
+export const footerInfomation = [
+  {
+    id: 1,
+    title: '客戶服務',
+    sevices: [
+      '運送說明',
+      '退換貨相關',
+      '付款資訊',
+      'FAQ'
+    ]
+  }, {
+    id: 2,
+    title: '關於我們',
+    sevices: [
+      '品牌故事',
+      '媒體聯繫',
+      'Press kit',
+    ]
+  }, {
+    id: 3,
+    title: '資訊',
+    sevices: [
+      '隱私權政策',
+      'Cookie',
+      'GDPR',
+    ]
+  }
+]

@@ -2,7 +2,10 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Noto Sans TC' !important;
+}
+
+body > * {
+  font-family: 'Noto Sans TC';
 }
 
 %headerGrid {
@@ -13,7 +16,6 @@
 }
 
 %mainTitle {
-  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
@@ -22,18 +24,59 @@
 }
 
 %subTitle {
-  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 24px;
 }
 
+%middleTitle {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+%smallTitle {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+
 %primaryText {
-  font-family: 'Noto Sans TC';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: $light-black-text;
+}
+
+%stepButtonText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+
+  border-radius: 8px;
+}
+
+%footerContentText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 17px;
+}
+
+%btn {
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+%cartBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: $light-gray;
 }
