@@ -52,6 +52,13 @@ body > * {
   color: $light-black-text;
 }
 
+%textCaption-1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
 %stepButtonText {
   font-style: normal;
   font-weight: 400;

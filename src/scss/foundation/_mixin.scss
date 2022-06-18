@@ -10,3 +10,9 @@
   grid-template-columns: $firstCol $secondCol;
   column-gap: 30px;
 }
+
+@mixin mobile {
+  @media screen and (max-width: 375px) {
+    @content
+  }
+}

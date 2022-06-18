@@ -17,14 +17,17 @@ export const stepperItems = [
   {
     id: 1,
     name: '寄送地址',
+    isCurrent: true,
     finished: false,
   }, {
     id: 2,
     name: '運送方式',
+    isCurrent: false,
     finished: false,
   }, {
     id: 3,
     name: '付款資訊',
+    isCurrent: false,
     finished: false,
   }
 ]
@@ -35,7 +38,7 @@ export const headerIcons = [
   'icon-theme.png',
 ]
 
-export const formShippingAddress = [
+export const formShippingAddressInputFields = [
   {
     id: 'title',
     title: '稱謂',
@@ -63,6 +66,26 @@ export const formShippingAddress = [
   }
 ];
 
+export const paymentInfoInputFields = [
+  {
+    id: 'name',
+    title: '持卡人姓名',
+    placeholder: 'John Don'
+  }, {
+    id: 'card-number',
+    title: '卡號',
+    placeholder: '1111 2222 3333 4444'
+  }, {
+    id: 'validity-period',
+    title: '有效期限',
+    placeholder: 'MM/YY'
+  }, {
+    id: 'cvc-ccv',
+    title: 'CVC / CCV',
+    placeholder: '123'
+  }
+]
+
 export const titleItems = [
   {
     id: 'sir',
@@ -88,6 +111,20 @@ export const productInfo = [
     image: 'product-2.png'
   }
 ];
+
+export const shippingMethods = [
+  {
+    id: 'general',
+    title: '標準運送',
+    description: '約 3~7 個工作天',
+    price: 'free'
+  }, {
+    id: 'DHL',
+    title: 'DHL 貨運',
+    description: '48 小時內送達',
+    price: '$500'
+  }
+]
 
 export const footerInfomation = [
   {

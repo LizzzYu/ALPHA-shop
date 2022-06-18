@@ -5,10 +5,12 @@ import {
   headerList,
   stepperItems,
   headerIcons,
-  formShippingAddress,
+  formShippingAddressInputFields,
+  paymentInfoInputFields,
   titleItems,
   citiesItems,
   productInfo,
+  shippingMethods,
   footerInfomation
 } from './config/pageConfigs'
 
@@ -40,7 +42,7 @@ const getStepper = () => {
   stepperItems.forEach(step => {
     stepperContent += 
     `<div class="stepper">
-      <div class="stepper__circle${step.id === currentStep || step.finished ? '__active' : ''}">${step.id}</div>
+      <div class="stepper__circle${step.id === currentStep || step.finished ? '__active' : ''}">${step.finished ? '&#10004;' : step.id}</div>
       <p class="stepper__text">${step.name}</p>
     </div>
     ${step.id !== 3 ? `<div class="stepper__line"></div>` : ''}`
@@ -60,7 +62,6 @@ const getFormContent = () => {
   const formPanel = document.querySelector('.form-panel')
   formPanel.innerHTML = ''
 
-  const formContentTop = '<form class="form-panel__row">'
   const formContentBottom = '</form>'
 
   let formContent = ''
@@ -81,11 +82,12 @@ const getFormContent = () => {
 
   switch (currentStep) {
     case 1:
-    formShippingAddress.forEach((item, index) => {
+    formShippingAddressInputFields.forEach((item, index) => {
       if (item.placeholder ===  '') {
         formContent += `
+        <form class="form-panel__row">
         <div class="form-panel__row__input-field form-panel__row__input-${index + 1}">
-          <label for="title">
+          <label for="${item.id}">
             ${item.title}
           </label>
           <select
@@ -98,6 +100,7 @@ const getFormContent = () => {
         ` 
       } else {
         formContent += `
+        <form class="form-panel__row">
         <div class="form-panel__row__input-field form-panel__row__input-${index + 1}">
           <label for="${item.id}">
             ${item.title}
@@ -111,9 +114,48 @@ const getFormContent = () => {
         `
       }
     })
+    break;
+
+    case 2:
+    shippingMethods.forEach(item => {
+      formContent += `
+      <form class="form-panel__radio-btn-group">
+      <div class="form-panel__radio-btn-group__option">
+        <input
+          type="radio"
+          id="${item.id}"
+          name="shipping-method"
+          value="${item.id}"
+        />
+        <label for="shipping-method">
+          <p>${item.title}</p>
+          <p>${item.description}</p>
+        </label>
+        <p>${item.price}</p>
+      </div>
+      `
+    })
+    break;
+
+    case 3:
+    paymentInfoInputFields.forEach((item, index) => {
+      formContent += `
+        <form class="form-panel__row">
+        <div class="form-panel__row__input-field form-panel__row__step-3__input-${index + 1}">
+          <label for="${item.id}">
+            ${item.title}
+          </label>
+          <input
+            id="${item.id}"
+            name="${item.id}"
+            type="text"
+            placeholder="${item.placeholder}" />
+        </div>
+        `
+    })
   }
 
-  formPanel.innerHTML = formContentTop + formContent + formContentBottom;
+  formPanel.innerHTML = formContent + formContentBottom;
 }
 
 const getProductInfo = () => {
@@ -145,6 +187,69 @@ const getProductInfo = () => {
   productPanel.innerHTML = productContent
 }
 
+const getActionButtonGroupContent = () => {
+  const buttonGroup = document.querySelector('.action-button-group')
+  let buttonGroupContent = ''
+  buttonGroup.innerHTML = ''
+
+  if (currentStep === 1) {
+    buttonGroupContent += `
+    <div class="action-button-group__previous"></div>
+    <button class="action-button-group__next">
+      下一步
+      <div class="action-button-group__line-right"></div>
+      <div class="action-button-group__arrow-right"></div>
+    </button>
+    `
+  } else if (currentStep === 3) {
+    buttonGroupContent += `
+    <button class="action-button-group__previous">
+      <div class="action-button-group__arrow-left"></div>
+      <div class="action-button-group__line-left"></div>
+      上一步
+    </button>
+    <button class="action-button-group__next">
+      確認下單
+    </button>
+    `
+  } else {
+    buttonGroupContent += `
+    <button class="action-button-group__previous">
+      <div class="action-button-group__arrow-left"></div>
+      <div class="action-button-group__line-left"></div>
+      上一步
+    </button>
+    <button class="action-button-group__next">
+      下一步
+      <div class="action-button-group__line-right"></div>
+      <div class="action-button-group__arrow-right"></div>
+    </button>
+    `
+  }
+
+  buttonGroup.innerHTML = buttonGroupContent
+
+  const nextButton = document.querySelector('.action-button-group__next')
+  const prevButton = document.querySelector('.action-button-group__previous')
+
+  nextButton.addEventListener('click', () => {
+    if (currentStep !== 3) {
+      stepperItems[currentStep - 1].finished = true
+      currentStep = currentStep + 1
+
+      getFullWhenLoaded()
+    } else return
+  })
+
+  prevButton.addEventListener('click', () => {
+    if (currentStep !== 1) {
+      stepperItems[currentStep - 2].finished = false
+      currentStep = currentStep - 1
+      getFullWhenLoaded()
+    } else return
+  })
+}
+
 // const getFooterContent = () => {
 //   const footerInfo = document.querySelector('.footer__container__info')
 //   footerInfo.innerHTML = ''
@@ -170,29 +275,13 @@ const getProductInfo = () => {
 //   footerInfo.innerHTML = footerInfoContentStart
 // }
 
-const nextButton = document.querySelector('.action-button-group__next')
-const prevButton = document.querySelector('.action-button-group__previous')
-
-nextButton.addEventListener('click', () => {
-  if (currentStep !== 3) {
-    currentStep = currentStep + 1
-    getFullWhenLoaded()
-  } else return
-})
-
-prevButton.addEventListener('click', () => {
-  if (currentStep !== 1) {
-    currentStep = currentStep - 1
-    getFullWhenLoaded()
-  } else return
-})
-
 const getFullWhenLoaded = () => {
   getHeaderList()
   getSubTitle()
   getStepper()
   getFormContent()
   getProductInfo()
+  getActionButtonGroupContent()
   // getFooterContent()
 }
 
