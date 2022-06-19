@@ -406,6 +406,11 @@ select {
 
   @include mobile {
     grid-row: 3 / 4;
+
+    .step-1 {
+      width: 100%;
+      justify-content: center;
+    }
   }
 
   &__previous {

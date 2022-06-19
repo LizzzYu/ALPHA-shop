@@ -195,7 +195,7 @@ const getActionButtonGroupContent = () => {
   if (currentStep === 1) {
     buttonGroupContent += `
     <div class="action-button-group__previous"></div>
-    <button class="action-button-group__next">
+    <button class="action-button-group__next step-1">
       下一步
       <div class="action-button-group__line-right"></div>
       <div class="action-button-group__arrow-right"></div>
