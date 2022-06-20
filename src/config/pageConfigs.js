@@ -1,6 +1,7 @@
 import '../static/images/icon-search.png';
 import '../static/images/icon-shopping-cart.png';
 import '../static/images/icon-theme.png';
+import '../static/images/icon-hamburger.png';
 import '../static/images/product-1.png';
 import '../static/images/product-2.png';
 import '../static/images/social-media-icon.png';
@@ -18,17 +19,17 @@ export const stepperItems = [
     id: 1,
     name: '寄送地址',
     isCurrent: true,
-    finished: false,
+    isFinished: false,
   }, {
     id: 2,
     name: '運送方式',
     isCurrent: false,
-    finished: false,
+    isFinished: false,
   }, {
     id: 3,
     name: '付款資訊',
     isCurrent: false,
-    finished: false,
+    isFinished: false,
   }
 ]
 

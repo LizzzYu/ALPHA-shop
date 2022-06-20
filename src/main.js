@@ -16,10 +16,15 @@ import {
 
 let currentStep = 1;
 
-const getHeaderList = () => {
-  const list = document.querySelector('.header__header-list')
-  const iconList = document.querySelector('.header__action-row')
+const list = document.querySelector('.header__header-list')
+const iconList = document.querySelector('.header__action-row')
+const stepper = document.querySelector('#stepper')
+const subTitle = document.querySelector('#sub-title');
 
+const formPanel = document.querySelector('.form-panel');
+const productPanel = document.querySelector('.product-panel')
+
+const getHeaderList = () => {
   const listContent = headerList.map(item => (
     `<li>${item}</li>`
   )).join('')
@@ -34,15 +39,13 @@ const getHeaderList = () => {
 
 // stepper
 const getStepper = () => {
-  const stepper = document.querySelector('#stepper')
   stepper.innerHTML = ''
-  
   let stepperContent = ''
 
   stepperItems.forEach(step => {
     stepperContent += 
     `<div class="stepper">
-      <div class="stepper__circle${step.id === currentStep || step.finished ? '__active' : ''}">${step.finished ? '&#10004;' : step.id}</div>
+      <div class="stepper__circle${step.id === currentStep || step.isFinished ? '__active' : ''}">${step.isFinished ? '&#10004;' : step.id}</div>
       <p class="stepper__text">${step.name}</p>
     </div>
     ${step.id !== 3 ? `<div class="stepper__line"></div>` : ''}`
@@ -52,14 +55,12 @@ const getStepper = () => {
 
 // get subTitle
 const getSubTitle = () => {
-  const subTitle = document.querySelector('#sub-title');
   subTitle.innerHTML = ''
   const subTitleContent = stepperItems.find(item => item.id === currentStep).name
   subTitle.innerText = subTitleContent
 }
 
 const getFormContent = () => {
-  const formPanel = document.querySelector('.form-panel')
   formPanel.innerHTML = ''
 
   const formContentBottom = '</form>'
@@ -120,19 +121,14 @@ const getFormContent = () => {
     shippingMethods.forEach(item => {
       formContent += `
       <form class="form-panel__radio-btn-group">
-      <div class="form-panel__radio-btn-group__option">
-        <input
-          type="radio"
-          id="${item.id}"
-          name="shipping-method"
-          value="${item.id}"
-        />
-        <label for="shipping-method">
-          <p>${item.title}</p>
-          <p>${item.description}</p>
+        <label class="radio-container form-panel__radio-btn-group__option">
+          <div class="form-panel__radio-btn-group__option__description">
+            <p>${item.title}</p>
+            <p>${item.description}</p>
+          </div>
+          <input type="radio" name="radio">
+          <span class="checkmark"></span>
         </label>
-        <p>${item.price}</p>
-      </div>
       `
     })
     break;
@@ -156,10 +152,23 @@ const getFormContent = () => {
   }
 
   formPanel.innerHTML = formContent + formContentBottom;
+
+  if (currentStep === 2) {
+    const radioOption = document.querySelectorAll('.form-panel__radio-btn-group__option');
+    
+
+    radioOption.forEach(option => {
+      option.addEventListener('click', () => {
+        for (let i = 0; i < radioOption.length; i++) {
+          radioOption[i].classList.remove('form-panel__radio-btn-group__option__checked')
+        }
+        option.classList.add('form-panel__radio-btn-group__option__checked')
+      })
+    })
+  }
 }
 
 const getProductInfo = () => {
-  const productPanel = document.querySelector('.product-panel')
   productPanel.innerHTML = ''
   let productContent = ''
 
@@ -189,13 +198,14 @@ const getProductInfo = () => {
 
 const getActionButtonGroupContent = () => {
   const buttonGroup = document.querySelector('.action-button-group')
+  
   let buttonGroupContent = ''
   buttonGroup.innerHTML = ''
 
   if (currentStep === 1) {
     buttonGroupContent += `
     <div class="action-button-group__previous"></div>
-    <button class="action-button-group__next step-1">
+    <button class="action-button-group__next">
       下一步
       <div class="action-button-group__line-right"></div>
       <div class="action-button-group__arrow-right"></div>
@@ -234,16 +244,15 @@ const getActionButtonGroupContent = () => {
 
   nextButton.addEventListener('click', () => {
     if (currentStep !== 3) {
-      stepperItems[currentStep - 1].finished = true
+      stepperItems[currentStep - 1].isFinished = true
       currentStep = currentStep + 1
-
       getFullWhenLoaded()
     } else return
   })
-
+  
   prevButton.addEventListener('click', () => {
     if (currentStep !== 1) {
-      stepperItems[currentStep - 2].finished = false
+      stepperItems[currentStep - 2].isFinished = false
       currentStep = currentStep - 1
       getFullWhenLoaded()
     } else return
