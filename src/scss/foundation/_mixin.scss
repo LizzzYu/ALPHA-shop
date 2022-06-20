@@ -2,17 +2,23 @@
   display: flex;
   justify-content: $justify;
   align-items: $align;
-}
+};
 
 @mixin grid-form-layout($firstCol, $secondCol) {
   width: 100%;
   display: grid;
   grid-template-columns: $firstCol $secondCol;
   column-gap: 30px;
-}
+};
 
 @mixin mobile {
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 715px) {
     @content
+  }
+};
+
+@mixin control-mobile-menu($displayMode) {
+  @media screen and (max-width: 950px) {
+    display: $displayMode;
   }
 }

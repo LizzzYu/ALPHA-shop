@@ -24,7 +24,7 @@ const subTitle = document.querySelector('#sub-title');
 const formPanel = document.querySelector('.form-panel');
 const productPanel = document.querySelector('.product-panel')
 
-const getHeaderList = () => {
+// const getHeaderList = () => {
   const listContent = headerList.map(item => (
     `<li>${item}</li>`
   )).join('')
@@ -35,7 +35,7 @@ const getHeaderList = () => {
 
   list.innerHTML = listContent
   iconList.innerHTML = iconContent
-}
+// }
 
 // stepper
 const getStepper = () => {
@@ -259,6 +259,33 @@ const getActionButtonGroupContent = () => {
   })
 }
 
+// render side menu items
+const sideMenuList = document.querySelector('.header__mobile-menu__content')
+const sideMenu = document.querySelector('.header__mobile-menu')
+let sideMenuContent = ''
+headerList.forEach(item => {
+  sideMenuContent += `
+  <p>${item}</p>
+  `
+})
+sideMenuList.innerHTML = sideMenuContent + `<p>${iconContent}</p>`;
+
+const hamburgerBtn = document.querySelector('.header__hamburger')
+const hamburgerBtnInSideMenu = document.querySelector('.header__mobile-menu__header__hamburger')
+
+hamburgerBtn.addEventListener('click', () => {
+  sideMenu.classList.remove('header__mobile-menu__hide')
+  sideMenu.classList.add('header__mobile-menu__show')
+})
+
+hamburgerBtnInSideMenu.addEventListener('click', () => {
+  sideMenu.classList.remove('header__mobile-menu__show')
+  sideMenu.classList.add('header__mobile-menu__hide')
+})
+
+// hamburgerBtn.addEventListener('click', () => {
+// })
+
 // const getFooterContent = () => {
 //   const footerInfo = document.querySelector('.footer__container__info')
 //   footerInfo.innerHTML = ''
@@ -285,7 +312,7 @@ const getActionButtonGroupContent = () => {
 // }
 
 const getFullWhenLoaded = () => {
-  getHeaderList()
+  // getHeaderList()
   getSubTitle()
   getStepper()
   getFormContent()
