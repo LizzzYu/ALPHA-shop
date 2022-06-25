@@ -276,6 +276,9 @@ li {
 
     &--active {
       color: $black;
+      @include mobile {
+        display: none;
+      }
     }
   }
 
