@@ -1,22 +1,25 @@
 import './scss/main.scss';
-import './static/images/alpha-shop-logo.png';
 
 import {
   headerList,
   stepperItems,
   headerIcons,
+  headerIconsWhite,
   formShippingAddressInputFields,
   paymentInfoInputFields,
   titleItems,
   citiesItems,
   productInfo,
   shippingMethods,
+  alphaLogos,
   footerInfomation
 } from './config/pageConfigs'
 
 let currentStep = 1;
 
+const html = document.querySelector('html')
 const list = document.querySelector('.header__header-list')
+const logo = document.querySelectorAll('.logo')
 const iconList = document.querySelector('.header__action-row')
 const stepper = document.querySelector('#stepper')
 const subTitle = document.querySelector('#sub-title');
@@ -24,18 +27,45 @@ const subTitle = document.querySelector('#sub-title');
 const formPanel = document.querySelector('.form-panel');
 const productPanel = document.querySelector('.product-panel')
 
-// const getHeaderList = () => {
+const iconContent = headerIcons.map(icon => (
+  `<img id="${icon.split('-')[1]}" src="${icon}.png" />`
+)).join('')
+
+const iconContentWhite = headerIconsWhite.map(icon => (
+  `<img id="${icon.split('-')[1]}" src="${icon}.png" />`
+)).join('')
+
+const getHeaderList = () => {
   const listContent = headerList.map(item => (
     `<li>${item}</li>`
   )).join('')
 
-  const iconContent = headerIcons.map(icon => (
-    `<img src="${icon}" />`
-  )).join('')
-
   list.innerHTML = listContent
-  iconList.innerHTML = iconContent
-// }
+  iconList.innerHTML = html.className === 'light' ? iconContent : iconContentWhite
+}
+
+// change theme function
+iconList.addEventListener('click', () => {
+  if (html.className === 'light') {
+    html.className = '';
+    html.className = 'dark';
+  } else 
+  if (html.className === 'dark') {
+    html.className = '';
+    html.className = 'light';
+  }
+  html.classList.toggle('dark')
+  getFullWhenLoaded()
+})
+
+// header logo
+const getLogo = () => {
+  if (html.className === 'light') {
+    logo.forEach(el => el.src = alphaLogos.dark)
+  } else {
+    logo.forEach(el => el.src = alphaLogos.light)
+  }
+}
 
 // stepper
 const getStepper = () => {
@@ -46,9 +76,9 @@ const getStepper = () => {
     stepperContent += 
     `<div class="stepper">
       <div class="stepper__circle${step.id === currentStep || step.isFinished ? '__active' : ''}">${step.isFinished ? '&#10004;' : step.id}</div>
-      <p class="stepper__text">${step.name}</p>
+      <p class="stepper__text${step.id === currentStep || step.isFinished ? '--active' : ''}">${step.name}</p>
     </div>
-    ${step.id !== 3 ? `<div class="stepper__line"></div>` : ''}`
+    ${step.id !== 3 ? `<div class="stepper__line${step.id === currentStep || step.isFinished ? '--active' : ''}"></div>` : ''}`
   })
   stepper.innerHTML = stepperContent
 }
@@ -94,6 +124,7 @@ const getFormContent = () => {
           <select
             id="${item.id}"
             name="${item.id}" class="form-panel__row__input-field__select">
+            <option value="" disabled selected>請選擇</option>
             ${item.id === 'title' ? titleOptions : citiesOptions}
           </select>
           <i class="form-panel__row__input-field__icon"></i>
@@ -172,6 +203,8 @@ const getProductInfo = () => {
   productPanel.innerHTML = ''
   let productContent = ''
 
+
+  // toLocaleString 可將價格千分位增加切分點
   productInfo.forEach(item => productContent += `
   <div class="product-panel__product">
     <img src="${item.image}" />
@@ -188,7 +221,7 @@ const getProductInfo = () => {
           </button>
         </div>
       </div>
-      <p>$${item.price}</p>
+      <p>$${item.price.toLocaleString()}</p>
     </div>
   </div>
   `)
@@ -312,7 +345,8 @@ hamburgerBtnInSideMenu.addEventListener('click', () => {
 // }
 
 const getFullWhenLoaded = () => {
-  // getHeaderList()
+  getHeaderList()
+  getLogo()
   getSubTitle()
   getStepper()
   getFormContent()
@@ -322,3 +356,5 @@ const getFullWhenLoaded = () => {
 }
 
 getFullWhenLoaded()
+
+const themeButton = document.querySelector('#icon-theme')

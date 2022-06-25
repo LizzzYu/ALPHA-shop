@@ -1,10 +1,17 @@
 import '../static/images/icon-search.png';
 import '../static/images/icon-shopping-cart.png';
 import '../static/images/icon-theme.png';
+
+import '../static/images/icon-search-white.png';
+import '../static/images/icon-shopping-cart-white.png';
+import '../static/images/icon-theme-white.png';
+
 import '../static/images/icon-hamburger.png';
 import '../static/images/product-1.png';
 import '../static/images/product-2.png';
 import '../static/images/social-media-icon.png';
+import '../static/images/alpha-shop-logo.png';
+import '../static/images/alpha-shop-logo-white.png'
 
 export const headerList = [
   '男款',
@@ -34,10 +41,21 @@ export const stepperItems = [
 ]
 
 export const headerIcons = [
-  'icon-search.png',
-  'icon-shopping-cart.png',
-  'icon-theme.png',
+  'icon-search',
+  'icon-shopping-cart',
+  'icon-theme',
 ]
+
+export const headerIconsWhite = [
+  'icon-search-white',
+  'icon-shopping-cart-white',
+  'icon-theme-white',
+]
+
+export const alphaLogos = {
+  light: 'alpha-shop-logo-white.png',
+  dark: 'alpha-shop-logo.png'
+}
 
 export const formShippingAddressInputFields = [
   {
