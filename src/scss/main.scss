@@ -136,6 +136,11 @@ li {
 
       :nth-last-child(1) {
         border-bottom: none;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        justify-content: center;
+        column-gap: 42px;
       }
 
       > p {
@@ -564,6 +569,7 @@ li {
 
   @include mobile {
     grid-row: 3 / 4;
+    border-top: none;
 
     .step-1 {
       width: 100%;

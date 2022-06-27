@@ -1,4 +1,5 @@
 @import './variables';
+@import './mixin';
 
 * {
   box-sizing: border-box;
@@ -8,61 +9,23 @@ body > * {
   font-family: 'Noto Sans TC';
 }
 
-html.light {
-  %mainTitle {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 38px;
-    color: $light-black-text;
-  }
-
-  %primaryText {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: $light-black-text;
-  }
-  
-  %cartBtn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: $light-gray;
-  }
-}
-
-html.dark {
-  %mainTitle {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 38px;
-    color: $white;
-  }
-
-  %primaryText {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: $gray-text-dark-theme;
-  }
-
-  %cartBtn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: $gray-text-dark-theme;
-  }
-}
-
 %headerGrid {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: max-content;
   column-gap: 32px;
+}
+
+%mainTitle {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  color: $black;
+
+  @include mobile {
+    font-size: 24px;
+  }
 }
 
 %subTitle {
@@ -93,6 +56,14 @@ html.dark {
   line-height: 16px;
 }
 
+%primaryText {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  // color: $gray-text-dark-theme;
+}
+
 %stepButtonText {
   font-style: normal;
   font-weight: 400;
@@ -115,3 +86,41 @@ html.dark {
   background-color: transparent;
 }
 
+%cartBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: $light-gray;
+}
+
+// html.light {
+//   %mainTitle {
+//     color: $light-black-text;
+//   }
+
+//   %primaryText {
+//     color: $light-black-text;
+//   }
+  
+//   %cartBtn {
+//     background-color: $light-gray;
+//   }
+// }
+
+html.dark {
+  %mainTitle {
+    color: $white;
+  }
+
+  %subTitle {
+    color: $white;
+  }
+
+  %primaryText {
+    color: $gray-text-dark-theme;
+  }
+
+  %cartBtn {
+    background-color: $gray-text-dark-theme;
+  }
+}

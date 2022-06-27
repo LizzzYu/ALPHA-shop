@@ -301,7 +301,7 @@ headerList.forEach(item => {
   <p>${item}</p>
   `
 })
-sideMenuList.innerHTML = sideMenuContent + `<p>${iconContent}</p>`;
+sideMenuList.innerHTML = sideMenuContent + `<p class="">${iconContent}</p>`;
 
 const hamburgerBtn = document.querySelector('.header__hamburger')
 const hamburgerBtnInSideMenu = document.querySelector('.header__mobile-menu__header__hamburger')
@@ -356,5 +356,3 @@ const getFullWhenLoaded = () => {
 }
 
 getFullWhenLoaded()
-
-const themeButton = document.querySelector('#icon-theme')
