@@ -12,112 +12,130 @@ import {
   productInfo,
   shippingMethods,
   alphaLogos,
-  footerInfomation
-} from './config/pageConfigs'
+} from './config/pageConfigs';
 
 let currentStep = 1;
+let totalPrice = 0;
+let fee = 0;
 
-const html = document.querySelector('html')
-const list = document.querySelector('.header__header-list')
-const logo = document.querySelectorAll('.logo')
-const iconList = document.querySelector('.header__action-row')
-const stepper = document.querySelector('#stepper')
+const html = document.querySelector('html');
+const list = document.querySelector('.header__header-list');
+const logo = document.querySelectorAll('.logo');
+const iconList = document.querySelector('.header__action-row');
+const stepper = document.querySelector('#stepper');
 const subTitle = document.querySelector('#sub-title');
 
 const formPanel = document.querySelector('.form-panel');
-const productPanel = document.querySelector('.product-panel')
+const productPanel = document.querySelector('.product-panel');
+const totalPriceText = document.querySelector('.total-price');
+const shippingFeeText = document.querySelector('.shipping-fee');
 
-const iconContent = headerIcons.map(icon => (
-  `<img id="${icon.split('-')[1]}" src="${icon}.png" />`
-)).join('')
+const iconContent = headerIcons
+  .map((icon) => `<img id="${icon.split('-')[1]}" src="${icon}.png" />`)
+  .join('');
 
-const iconContentWhite = headerIconsWhite.map(icon => (
-  `<img id="${icon.split('-')[1]}" src="${icon}.png" />`
-)).join('')
+const iconContentWhite = headerIconsWhite
+  .map((icon) => `<img id="${icon.split('-')[1]}" src="${icon}.png" />`)
+  .join('');
 
 const getHeaderList = () => {
-  const listContent = headerList.map(item => (
-    `<li>${item}</li>`
-  )).join('')
+  const listContent = headerList.map((item) => `<li>${item}</li>`).join('');
 
-  list.innerHTML = listContent
-  iconList.innerHTML = html.className === 'light' ? iconContent : iconContentWhite
-}
+  list.innerHTML = listContent;
+  iconList.innerHTML =
+    html.className === 'light' ? iconContent : iconContentWhite;
+};
 
 // change theme function
 iconList.addEventListener('click', () => {
   if (html.className === 'light') {
     html.className = '';
     html.className = 'dark';
-  } else 
-  if (html.className === 'dark') {
+  } else if (html.className === 'dark') {
     html.className = '';
     html.className = 'light';
   }
-  html.classList.toggle('dark')
-  getFullWhenLoaded()
-})
+  html.classList.toggle('dark');
+  getFullWhenLoaded();
+});
 
 // header logo
 const getLogo = () => {
   if (html.className === 'light') {
-    logo.forEach(el => el.src = alphaLogos.dark)
+    logo.forEach((el) => (el.src = alphaLogos.dark));
   } else {
-    logo.forEach(el => el.src = alphaLogos.light)
+    logo.forEach((el) => (el.src = alphaLogos.light));
   }
-}
+};
 
 // stepper
 const getStepper = () => {
-  stepper.innerHTML = ''
-  let stepperContent = ''
+  stepper.innerHTML = '';
+  let stepperContent = '';
 
-  stepperItems.forEach(step => {
-    stepperContent += 
-    `<div class="stepper">
-      <div class="stepper__circle${step.id === currentStep || step.isFinished ? '__active' : ''}">${step.isFinished ? '&#10004;' : step.id}</div>
-      <p class="stepper__text${step.id === currentStep || step.isFinished ? '--active' : ''}">${step.name}</p>
+  stepperItems.forEach((step) => {
+    stepperContent += `<div class="stepper">
+      <div class="stepper__circle${
+        step.id === currentStep || step.isFinished ? '__active' : ''
+      }">${step.isFinished ? '&#10004;' : step.id}</div>
+      <p class="stepper__text${
+        step.id === currentStep || step.isFinished ? '--active' : ''
+      }">${step.name}</p>
     </div>
-    ${step.id !== 3 ? `<div class="stepper__line${step.id === currentStep || step.isFinished ? '--active' : ''}"></div>` : ''}`
-  })
-  stepper.innerHTML = stepperContent
-}
+    ${
+      step.id !== 3
+        ? `<div class="stepper__line${
+            step.id === currentStep || step.isFinished ? '--active' : ''
+          }"></div>`
+        : ''
+    }`;
+  });
+  stepper.innerHTML = stepperContent;
+};
 
 // get subTitle
 const getSubTitle = () => {
-  subTitle.innerHTML = ''
-  const subTitleContent = stepperItems.find(item => item.id === currentStep).name
-  subTitle.innerText = subTitleContent
-}
+  subTitle.innerHTML = '';
+  const subTitleContent = stepperItems.find(
+    (item) => item.id === currentStep
+  ).name;
+  subTitle.innerText = subTitleContent;
+};
 
 const getFormContent = () => {
-  formPanel.innerHTML = ''
+  formPanel.innerHTML = '';
 
-  const formContentBottom = '</form>'
+  const formContentBottom = '</form>';
 
-  let formContent = ''
-  let titleOptions = ''
-  let citiesOptions = ''
+  let formContent = '';
+  let titleOptions = '';
+  let citiesOptions = '';
 
-  titleItems.forEach(option => titleOptions += 
-    `<option value="${option.id}">
+  titleItems.forEach(
+    (option) =>
+      (titleOptions += `<option value="${option.id}">
       ${option.name}
     </option>
     `)
+  );
 
-  citiesItems.forEach(option => citiesOptions +=
-    `<option value="${option}">
+  citiesItems.forEach(
+    (option) =>
+      (citiesOptions += `<option value="${option}">
       ${option}
     </option>
     `)
+  );
 
   switch (currentStep) {
     case 1:
-    formShippingAddressInputFields.forEach((item, index) => {
-      if (item.placeholder ===  '') {
-        formContent += `
+      formShippingAddressInputFields.forEach((item, index) => {
+        if (item.placeholder === '') {
+          formContent += `
         <form class="form-panel__row">
-        <div class="form-panel__row__input-field form-panel__row__input-${index + 1}">
+        <div class="form-panel__row__input-field form-panel__row__input-${
+          index + 1
+        }">
           <label for="${item.id}">
             ${item.title}
           </label>
@@ -129,11 +147,13 @@ const getFormContent = () => {
           </select>
           <i class="form-panel__row__input-field__icon"></i>
         </div>
-        ` 
-      } else {
-        formContent += `
+        `;
+        } else {
+          formContent += `
         <form class="form-panel__row">
-        <div class="form-panel__row__input-field form-panel__row__input-${index + 1}">
+        <div class="form-panel__row__input-field form-panel__row__input-${
+          index + 1
+        }">
           <label for="${item.id}">
             ${item.title}
           </label>
@@ -143,32 +163,39 @@ const getFormContent = () => {
             type="text"
             placeholder="${item.placeholder}" />
         </div>
-        `
-      }
-    })
-    break;
+        `;
+        }
+      });
+      break;
 
     case 2:
-    shippingMethods.forEach(item => {
-      formContent += `
+      shippingMethods.forEach((item) => {
+        formContent += `
       <form class="form-panel__radio-btn-group">
         <label class="radio-container form-panel__radio-btn-group__option">
           <div class="form-panel__radio-btn-group__option__description">
             <p>${item.title}</p>
             <p>${item.description}</p>
           </div>
-          <input type="radio" name="radio">
+          <input class="radio-input" type="radio" name="radio" value="${
+            item.price
+          }">
           <span class="checkmark"></span>
+          <p class="form-panel__radio-btn-group__option__shipping-fee">
+            ${item.price === 0 ? '免費' : '$' + item.price}
+          </p>
         </label>
-      `
-    })
-    break;
+      `;
+      });
+      break;
 
     case 3:
-    paymentInfoInputFields.forEach((item, index) => {
-      formContent += `
+      paymentInfoInputFields.forEach((item, index) => {
+        formContent += `
         <form class="form-panel__row">
-        <div class="form-panel__row__input-field form-panel__row__step-3__input-${index + 1}">
+        <div class="form-panel__row__input-field form-panel__row__step-3__input-${
+          index + 1
+        }">
           <label for="${item.id}">
             ${item.title}
           </label>
@@ -178,45 +205,66 @@ const getFormContent = () => {
             type="text"
             placeholder="${item.placeholder}" />
         </div>
-        `
-    })
+        `;
+      });
   }
 
   formPanel.innerHTML = formContent + formContentBottom;
 
   if (currentStep === 2) {
-    const radioOption = document.querySelectorAll('.form-panel__radio-btn-group__option');
-    
+    const radioOption = document.querySelectorAll(
+      '.form-panel__radio-btn-group__option'
+    );
 
-    radioOption.forEach(option => {
+    radioOption.forEach((option) => {
       option.addEventListener('click', () => {
         for (let i = 0; i < radioOption.length; i++) {
-          radioOption[i].classList.remove('form-panel__radio-btn-group__option__checked')
+          radioOption[i].classList.remove(
+            'form-panel__radio-btn-group__option__checked'
+          );
         }
-        option.classList.add('form-panel__radio-btn-group__option__checked')
-      })
-    })
+        option.classList.add('form-panel__radio-btn-group__option__checked');
+      });
+    });
+
+    formPanel.addEventListener('click', (e) => {
+      if (e.target.classList.contains('radio-input')) {
+        const feeValue = Number(e.target.value);
+        shippingFeeText.innerHTML = feeValue === 0 ? '免費' : '$' + feeValue;
+        totalPriceText.innerHTML = '$' + (totalPrice + feeValue).toLocaleString()
+        fee = feeValue
+      }
+    });
   }
-}
+};
 
 const getProductInfo = () => {
-  productPanel.innerHTML = ''
-  let productContent = ''
-
+  productPanel.innerHTML = '';
+  let productContent = '';
 
   // toLocaleString 可將價格千分位增加切分點
-  productInfo.forEach(item => productContent += `
+  productInfo.forEach(
+    (item, index) =>
+      (productContent += `
   <div class="product-panel__product">
     <img src="${item.image}" />
     <div class="product-panel__product__info">
       <div>
         <p>${item.name}</p>
         <div class="product-panel__button-group">
-          <button class="product-panel__button-group__minus">
+          <button
+            data-productindex="${index}"
+            data-productprice="${item.price}"
+            class="product-panel__button-group__minus">
             -
           </button>
-          <p>1</p>
-          <button class="product-panel__button-group__plus">
+          <p
+            data-productindex="${index}"
+            class="count">0</p>
+          <button
+            data-productindex="${index}"
+            data-productprice="${item.price}"
+            class="product-panel__button-group__plus">
             +
           </button>
         </div>
@@ -225,15 +273,45 @@ const getProductInfo = () => {
     </div>
   </div>
   `)
+  );
 
-  productPanel.innerHTML = productContent
-}
+  productPanel.innerHTML = productContent;
+
+  const countText = document.querySelectorAll('.count');
+
+  const totalPriceTop = '$';
+  let priceSum = 0;
+
+  totalPriceText.innerHTML = totalPriceTop + priceSum;
+
+  // add event listener to productPanel and trigger function refer to class name accordingly
+  productPanel.addEventListener('click', (e) => {
+    const target = e.target;
+    const index = target.dataset.productindex;
+    const price = Number(target.dataset.productprice);
+    let currentCountText = countText[index];
+
+    if (target.classList.contains('product-panel__button-group__plus')) {
+      currentCountText.innerHTML = Number(currentCountText.innerHTML) + 1;
+      priceSum += price;
+    } else if (
+      target.classList.contains('product-panel__button-group__minus')
+    ) {
+      if (currentCountText.innerHTML === '0') return;
+
+      currentCountText.innerHTML = Number(currentCountText.innerHTML) - 1;
+      priceSum -= price;
+    }
+    totalPrice = priceSum;
+    totalPriceText.innerHTML = totalPriceTop + (totalPrice + fee).toLocaleString();
+  });
+};
 
 const getActionButtonGroupContent = () => {
-  const buttonGroup = document.querySelector('.action-button-group')
-  
-  let buttonGroupContent = ''
-  buttonGroup.innerHTML = ''
+  const buttonGroup = document.querySelector('.action-button-group');
+
+  let buttonGroupContent = '';
+  buttonGroup.innerHTML = '';
 
   if (currentStep === 1) {
     buttonGroupContent += `
@@ -243,7 +321,7 @@ const getActionButtonGroupContent = () => {
       <div class="action-button-group__line-right"></div>
       <div class="action-button-group__arrow-right"></div>
     </button>
-    `
+    `;
   } else if (currentStep === 3) {
     buttonGroupContent += `
     <button class="action-button-group__previous">
@@ -254,7 +332,7 @@ const getActionButtonGroupContent = () => {
     <button class="action-button-group__next">
       確認下單
     </button>
-    `
+    `;
   } else {
     buttonGroupContent += `
     <button class="action-button-group__previous">
@@ -267,54 +345,58 @@ const getActionButtonGroupContent = () => {
       <div class="action-button-group__line-right"></div>
       <div class="action-button-group__arrow-right"></div>
     </button>
-    `
+    `;
   }
 
-  buttonGroup.innerHTML = buttonGroupContent
+  buttonGroup.innerHTML = buttonGroupContent;
 
-  const nextButton = document.querySelector('.action-button-group__next')
-  const prevButton = document.querySelector('.action-button-group__previous')
+  const nextButton = document.querySelector('.action-button-group__next');
+  const prevButton = document.querySelector('.action-button-group__previous');
 
   nextButton.addEventListener('click', () => {
     if (currentStep !== 3) {
-      stepperItems[currentStep - 1].isFinished = true
-      currentStep = currentStep + 1
-      getFullWhenLoaded()
-    } else return
-  })
-  
+      stepperItems[currentStep - 1].isFinished = true;
+      currentStep = currentStep + 1;
+      getFullWhenLoaded();
+      totalPriceText.innerHTML = '$' + (totalPrice + fee).toLocaleString();
+    } else return;
+  });
+
   prevButton.addEventListener('click', () => {
     if (currentStep !== 1) {
-      stepperItems[currentStep - 2].isFinished = false
-      currentStep = currentStep - 1
-      getFullWhenLoaded()
-    } else return
-  })
-}
+      stepperItems[currentStep - 2].isFinished = false;
+      currentStep = currentStep - 1;
+      getFullWhenLoaded();
+      totalPriceText.innerHTML = '$' + (totalPrice + fee).toLocaleString();
+    } else return;
+  });
+};
 
 // render side menu items
-const sideMenuList = document.querySelector('.header__mobile-menu__content')
-const sideMenu = document.querySelector('.header__mobile-menu')
-let sideMenuContent = ''
-headerList.forEach(item => {
+const sideMenuList = document.querySelector('.header__mobile-menu__content');
+const sideMenu = document.querySelector('.header__mobile-menu');
+let sideMenuContent = '';
+headerList.forEach((item) => {
   sideMenuContent += `
   <p>${item}</p>
-  `
-})
+  `;
+});
 sideMenuList.innerHTML = sideMenuContent + `<p class="">${iconContent}</p>`;
 
-const hamburgerBtn = document.querySelector('.header__hamburger')
-const hamburgerBtnInSideMenu = document.querySelector('.header__mobile-menu__header__hamburger')
+const hamburgerBtn = document.querySelector('.header__hamburger');
+const hamburgerBtnInSideMenu = document.querySelector(
+  '.header__mobile-menu__header__hamburger'
+);
 
 hamburgerBtn.addEventListener('click', () => {
-  sideMenu.classList.remove('header__mobile-menu__hide')
-  sideMenu.classList.add('header__mobile-menu__show')
-})
+  sideMenu.classList.remove('header__mobile-menu__hide');
+  sideMenu.classList.add('header__mobile-menu__show');
+});
 
 hamburgerBtnInSideMenu.addEventListener('click', () => {
-  sideMenu.classList.remove('header__mobile-menu__show')
-  sideMenu.classList.add('header__mobile-menu__hide')
-})
+  sideMenu.classList.remove('header__mobile-menu__show');
+  sideMenu.classList.add('header__mobile-menu__hide');
+});
 
 // hamburgerBtn.addEventListener('click', () => {
 // })
@@ -345,14 +427,14 @@ hamburgerBtnInSideMenu.addEventListener('click', () => {
 // }
 
 const getFullWhenLoaded = () => {
-  getHeaderList()
-  getLogo()
-  getSubTitle()
-  getStepper()
-  getFormContent()
-  getProductInfo()
-  getActionButtonGroupContent()
+  getHeaderList();
+  getLogo();
+  getSubTitle();
+  getStepper();
+  getFormContent();
+  getProductInfo();
+  getActionButtonGroupContent();
   // getFooterContent()
-}
+};
 
-getFullWhenLoaded()
+getFullWhenLoaded();

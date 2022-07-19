@@ -136,12 +136,12 @@ export const shippingMethods = [
     id: 'general',
     title: '標準運送',
     description: '約 3~7 個工作天',
-    price: 'free'
+    price: 0
   }, {
     id: 'DHL',
     title: 'DHL 貨運',
     description: '48 小時內送達',
-    price: '$500'
+    price: 500
   }
 ]
 
